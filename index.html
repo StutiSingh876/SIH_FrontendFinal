@@ -181,147 +181,120 @@
     
 </body>
 <script>
-        // Fallback if primary CDN fails
-        if (typeof tailwind === 'undefined') {
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/tailwindcss@3.4.0/lib/tailwind.min.js';
-            document.head.appendChild(script);
-        }
+    // Fallback if primary CDN fails
+    if (typeof tailwind === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/tailwindcss@3.4.0/lib/tailwind.min.js';
+        document.head.appendChild(script);
+    }
 
+    document.addEventListener('DOMContentLoaded', () => {
+        const formContainer = document.getElementById('formContainer');
+        const showSignupBtn = document.getElementById('showSignupBtn');
+        const showLoginBtn = document.getElementById('showLoginBtn');
 
-
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
         
-        document.addEventListener('DOMContentLoaded', () => {
-            const formContainer = document.getElementById('formContainer');
-            const showSignupBtn = document.getElementById('showSignupBtn');
-            const showLoginBtn = document.getElementById('showLoginBtn');
+        // New Signup Flow Elements
+        const roleSelection = document.getElementById('roleSelection');
+        const signupFormContainer = document.getElementById('signupFormContainer');
+        const roleButtons = document.querySelectorAll('.role-btn');
+        const backToRolesBtn = document.getElementById('backToRoles');
+        const signupEmailInput = document.getElementById('signupEmail');
+        const roleText = document.getElementById('role-text');
+        
+        const passwordInput = document.getElementById('signupPassword');
+        const strengthIndicator = document.getElementById('password-strength');
+        const lengthCheck = document.getElementById('length');
+        const uppercaseCheck = document.getElementById('uppercase');
+        const lowercaseCheck = document.getElementById('lowercase');
+        const specialCheck = document.getElementById('special');
 
-            const loginForm = document.getElementById('loginForm');
-            const signupForm = document.getElementById('signupForm');
-            
-            // New Signup Flow Elements
-            const roleSelection = document.getElementById('roleSelection');
-            const signupFormContainer = document.getElementById('signupFormContainer');
-            const roleButtons = document.querySelectorAll('.role-btn');
-            const backToRolesBtn = document.getElementById('backToRoles');
-            const signupEmailInput = document.getElementById('signupEmail');
-            const roleText = document.getElementById('role-text');
-            
-            const passwordInput = document.getElementById('signupPassword');
-            const strengthIndicator = document.getElementById('password-strength');
-            const lengthCheck = document.getElementById('length');
-            const uppercaseCheck = document.getElementById('uppercase');
-            const lowercaseCheck = document.getElementById('lowercase');
-            const specialCheck = document.getElementById('special');
+        // --- Form flipping logic ---
+        showSignupBtn.addEventListener('click', () => {
+            formContainer.classList.add('flipped');
+        });
 
-            // --- Form flipping logic ---
-            showSignupBtn.addEventListener('click', () => {
-                formContainer.classList.add('flipped');
-            });
-
-            showLoginBtn.addEventListener('click', () => {
-                formContainer.classList.remove('flipped');
-                // Reset to role selection view when flipping back to login
-                setTimeout(() => {
-                    signupFormContainer.classList.add('hidden');
-                    roleSelection.classList.remove('hidden');
-                }, 800); // Wait for flip animation to finish
-            });
-
-            // --- New Signup Role Selection Logic ---
-            roleButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const role = button.dataset.role;
-                    
-                    // Update form based on role
-                    roleText.textContent = role.replace('-', ' ');
-                    if (role === 'Admin') {
-                        signupEmailInput.placeholder = 'Official Email';
-                    } else {
-                        signupEmailInput.placeholder = 'Email';
-                    }
-                    
-                    // Switch views
-                    roleSelection.classList.add('hidden');
-                    signupFormContainer.classList.remove('hidden');
-                });
-            });
-
-            backToRolesBtn.addEventListener('click', () => {
+        showLoginBtn.addEventListener('click', () => {
+            formContainer.classList.remove('flipped');
+            setTimeout(() => {
                 signupFormContainer.classList.add('hidden');
                 roleSelection.classList.remove('hidden');
-            });
+            }, 800);
+        });
 
-
-            // --- Password strength validation logic ---
-            passwordInput.addEventListener('focus', () => {
-                strengthIndicator.classList.remove('hidden');
+        // --- New Signup Role Selection Logic ---
+        roleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const role = button.dataset.role;
+                roleText.textContent = role.replace('-', ' ');
+                signupEmailInput.placeholder = (role === 'Admin') ? 'Official Email' : 'Email';
+                roleSelection.classList.add('hidden');
+                signupFormContainer.classList.remove('hidden');
             });
-            
-            passwordInput.addEventListener('blur', () => {
-                if(passwordInput.value === '') {
-                     strengthIndicator.classList.add('hidden');
-                }
-            });
+        });
 
-            passwordInput.addEventListener('input', () => {
-                const password = passwordInput.value;
-                
-                // Length check
-                validateRequirement(password.length >= 8, lengthCheck);
-                // Uppercase check
-                validateRequirement(/[A-Z]/.test(password), uppercaseCheck);
-                // Lowercase check
-                validateRequirement(/[a-z]/.test(password), lowercaseCheck);
-                // Special character check
-                validateRequirement(/[\W_]/.test(password), specialCheck); // \W is non-word, _ is underscore
-            });
+        backToRolesBtn.addEventListener('click', () => {
+            signupFormContainer.classList.add('hidden');
+            roleSelection.classList.remove('hidden');
+        });
 
-            function validateRequirement(isValid, element) {
-                if (isValid) {
-                    element.classList.remove('text-red-500');
-                    element.classList.add('text-green-500');
-                    element.querySelector('i').classList.remove('fa-times-circle');
-                    element.querySelector('i').classList.add('fa-check-circle');
-                } else {
-                    element.classList.remove('text-green-500');
-                    element.classList.add('text-red-500');
-                    element.querySelector('i').classList.remove('fa-check-circle');
-                    element.querySelector('i').classList.add('fa-times-circle');
-                }
+        // --- Password strength validation logic ---
+        passwordInput.addEventListener('focus', () => {
+            strengthIndicator.classList.remove('hidden');
+        });
+
+        passwordInput.addEventListener('blur', () => {
+            if(passwordInput.value === '') {
+                strengthIndicator.classList.add('hidden');
             }
+        });
 
-            // --- Form submission handlers ---
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                console.log('Login form submitted.');
-                // In a real app, you would first verify the login with a server.
-                // For this example, we will redirect immediately.
-                
-                // Replace the alert with this line to redirect:
-                window.location.href = 'MindCareMainPage.html'; 
-            });
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            validateRequirement(password.length >= 8, lengthCheck);
+            validateRequirement(/[A-Z]/.test(password), uppercaseCheck);
+            validateRequirement(/[a-z]/.test(password), lowercaseCheck);
+            validateRequirement(/[\W_]/.test(password), specialCheck);
+        });
 
-      signupForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+        function validateRequirement(isValid, element) {
+            if (isValid) {
+                element.classList.remove('text-red-500');
+                element.classList.add('text-green-500');
+                element.querySelector('i').classList.remove('fa-times-circle');
+                element.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                element.classList.remove('text-green-500');
+                element.classList.add('text-red-500');
+                element.querySelector('i').classList.remove('fa-check-circle');
+                element.querySelector('i').classList.add('fa-times-circle');
+            }
+        }
 
-  const isLengthValid = passwordInput.value.length >= 8;
-  const isUpperValid = /[A-Z]/.test(passwordInput.value);
-  const isLowerValid = /[a-z]/.test(passwordInput.value);
-  const isSpecialValid = /[\W_]/.test(passwordInput.value);
+        // --- Form submission handlers ---
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('Login form submitted.');
+            // ✅ Use correct relative path for GitHub Pages
+            window.location.href = './MindCareMainPage.html';
+        });
 
-  if (isLengthValid && isUpperValid && isLowerValid && isSpecialValid) {
-    console.log('Signup form submitted.');
-    // TODO: Send data to backend to create account here
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const isLengthValid = passwordInput.value.length >= 8;
+            const isUpperValid = /[A-Z]/.test(passwordInput.value);
+            const isLowerValid = /[a-z]/.test(passwordInput.value);
+            const isSpecialValid = /[\W_]/.test(passwordInput.value);
 
-    // Redirect to main page after successful signup
-    window.location.href = 'MindCareMainPage.html';
-
-  } else {
-    alert('Please ensure your password meets all the requirements.');
-  }
-});
-
-  
-
-</html>
+            if (isLengthValid && isUpperValid && isLowerValid && isSpecialValid) {
+                console.log('Signup form submitted.');
+                // ✅ Use correct relative path for GitHub Pages
+                window.location.href = './MindCareMainPage.html';
+            } else {
+                alert('Please ensure your password meets all the requirements.');
+            }
+        });
+    });
+</script>
