@@ -302,7 +302,7 @@
                 window.location.href = 'MindCareMainPage.html'; 
             });
 
-          signupForm.addEventListener('submit', (e) => {
+      signupForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const isLengthValid = passwordInput.value.length >= 8;
@@ -315,8 +315,7 @@
     // TODO: Send data to backend to create account here
 
     // Redirect to main page after successful signup
-  window.location.href = 'MindCareMainPage.html';
-
+    window.location.href = 'MindCareMainPage.html';
 
   } else {
     alert('Please ensure your password meets all the requirements.');
