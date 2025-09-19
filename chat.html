@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - How do you cope with exam stress? - MindCare</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+
+    <header class="page-header">
+        <div class="container">
+            <a href="MindCareMainPage.html" class="logo">MindCare</a>
+            <nav>
+                <a href="forum.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Forum</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="chat-main">
+        <div class="container">
+            <div class="main-content-wrapper">
+
+                <aside class="discussion-sidebar">
+                    <h3>Other Discussions</h3>
+                    <ul class="discussion-list">
+                        <li class="discussion-item active">
+                            <a href="#">
+                                <span class="discussion-title">How do you cope with exam stress?</span>
+                                <span class="discussion-meta">15 Replies &middot; by Anonymous User</span>
+                            </a>
+                        </li>
+                        <li class="discussion-item">
+                            <a href="#">
+                                <span class="discussion-title">Tips for balancing studies and social life</span>
+                                <span class="discussion-meta">8 Replies &middot; by Jhanvi D.</span>
+                            </a>
+                        </li>
+                        <li class="discussion-item">
+                            <a href="#">
+                                <span class="discussion-title">Feeling homesick - anyone else?</span>
+                                <span class="discussion-meta">22 Replies &middot; by Anonymous User</span>
+                            </a>
+                        </li>
+                        <li class="discussion-item">
+                            <a href="#">
+                                <span class="discussion-title">Great resources for mindfulness and meditation</span>
+                                <span class="discussion-meta">5 Replies &middot; by Admin</span>
+                            </a>
+                        </li>
+                         <li class="discussion-item">
+                            <a href="#">
+                                <span class="discussion-title">Another discussion topic here</span>
+                                <span class="discussion-meta">12 Replies &middot; by Sammer K.</span>
+                            </a>
+                        </li>
+                         <li class="discussion-item">
+                            <a href="#">
+                                <span class="discussion-title">How to stay motivated?</span>
+                                <span class="discussion-meta">30 Replies &middot; by Admin</span>
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+                
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2>How do you cope with exam stress?</h2>
+                        <p>Started by <a href="BookingSlot.html" class="author-link">Anonymous User</a></p>
+                    </div>
+
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message received">
+                            <i class="fa-solid fa-user-circle message-avatar"></i>
+                            <div class="message-content">
+                                <div class="message-author">Anonymous User</div>
+                                <div class="message-bubble">
+                                    <p>I've been finding it really hard to focus with final exams coming up. The pressure is just overwhelming sometimes. Does anyone have any strategies that actually work?</p>
+                                </div>
+                                <div class="message-timestamp">Yesterday, 10:32 PM</div>
+                            </div>
+                        </div>
+
+                        <div class="message sent">
+                            <div class="message-content">
+                                 <div class="message-author">You</div>
+                                <div class="message-bubble">
+                                    <p>I feel you! I've started using the Pomodoro Technique. 25 minutes of focused study and then a 5-minute break. It helps me not get too burned out.</p>
+                                </div>
+                                <div class="message-timestamp">Today, 8:15 AM</div>
+                            </div>
+                             <i class="fa-solid fa-user-circle message-avatar"></i>
+                        </div>
+                        
+                        <div class="message received">
+                            <i class="fa-solid fa-user-circle message-avatar"></i>
+                            <div class="message-content">
+                                <div class="message-author">Jane D.</div>
+                                <div class="message-bubble">
+                                    <p>That's a great tip! Also, make sure you're getting enough sleep. Pulling all-nighters usually does more harm than good for me.</p>
+                                </div>
+                                <div class="message-timestamp">Today, 8:17 AM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <form id="chat-form" class="chat-form">
+                            <input type="text" id="message-input" placeholder="Type your message here..." autocomplete="off">
+                            <button type="submit" class="btn-send" aria-label="Send Message">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        <p>&copy; 2025 MindCare. All rights reserved.</p>
+    </footer>
+
+    <script src="chat.js"></script>
+</body>
+</html>

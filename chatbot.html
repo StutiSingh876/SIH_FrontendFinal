@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot - MindCare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <script src="js/api-client.js"></script>
+    <script src="js/gamification.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Added a cozy gradient background linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);*/
+            background:#DBF3FA; 
+        }
+        .chat-container {
+            /* Adjusted height calculation for a better fit */
+            height: calc(100vh - 180px); 
+        }
+        .message-bubble {
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .user-message {
+            /* Softer, more pleasing gradient for user messages */
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            color: white;
+            margin-left: auto;
+        }
+        .bot-message {
+            background-color: #f9fafb; /* Slightly off-white for softness */
+            border: 1px solid #e5e7eb;
+            color: #374151;
+        }
+        .typing-indicator {
+            display: none;
+        }
+        .typing-indicator.show {
+            display: block;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-10 border-b border-gray-200/80">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="MindCareMainPage.html" class="text-slate-600 hover:text-blue-600">
+                    <i class="fas fa-arrow-left text-xl"></i>
+                </a>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">AI Wellness Companion</h1>
+                    <p class="text-sm text-gray-500">Your empathetic mental health support</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span class="text-sm text-gray-600 font-medium">Online</span>
+                </div>
+                <i class="fas fa-user-circle text-3xl text-gray-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-6">
+        <div class="bg-white/75 backdrop-blur-lg rounded-xl shadow-lg border border-gray-200/80 chat-container flex flex-col">
+            <div id="chat-messages" class="flex-1 p-6 overflow-y-auto space-y-4">
+                <div class="message-bubble bot-message p-4 rounded-lg">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800 mb-1">AI Wellness Companion</p>
+                            <p class="text-gray-600">Hello! I'm here to support you on your mental wellness journey. How are you feeling today? Feel free to share what's on your mind.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="typing-indicator" class="typing-indicator px-6 pb-2">
+                <div class="message-bubble bot-message p-4 rounded-lg inline-block">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-blue-600"></i>
+                        </div>
+                        <div class="flex space-x-1 items-center">
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chat-error" class="hidden bg-red-100 border border-red-400 text-red-700 px-6 py-3 mx-6 mb-2 rounded-lg"></div>
+
+            <div class="border-t border-gray-200/80 p-4 bg-white/70">
+                <div class="mb-3 flex flex-wrap gap-2">
+                    <button class="quick-action-btn bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm hover:bg-indigo-200 transition-colors">
+                        I'm feeling anxious
+                    </button>
+                    <button class="quick-action-btn bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm hover:bg-indigo-200 transition-colors">
+                        Need stress relief
+                    </button>
+                    <button class="quick-action-btn bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm hover:bg-indigo-200 transition-colors">
+                        Feeling overwhelmed
+                    </button>
+                    <button class="quick-action-btn bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm hover:bg-indigo-200 transition-colors">
+                        Just want to talk
+                    </button>
+                </div>
+                <form id="chat-form" class="flex gap-3">
+                    <div class="flex-1 relative">
+                        <input 
+                            type="text" 
+                            id="message-input" 
+                            placeholder="Type your message here..." 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            required
+                        >
+                    </div>
+                    <button 
+                        type="submit" 
+                        id="send-button"
+                        class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="analysis-panel" class="hidden mt-6 bg-white/70 backdrop-blur-lg rounded-xl shadow-lg border border-gray-200/80 p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Emotional Analysis</h3>
+            <div id="analysis-content" class="space-y-3">
+                </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check if user is logged in
+            // MOCKED for demonstration. Replace authUtils with your actual authentication logic.
+            const authUtils = { isLoggedIn: () => true }; 
+            if (!authUtils.isLoggedIn()) {
+                window.location.href = 'Login.html';
+                return;
+            }
+
+            const chatMessages = document.getElementById('chat-messages');
+            const messageInput = document.getElementById('message-input');
+            const chatForm = document.getElementById('chat-form');
+            const sendButton = document.getElementById('send-button');
+            const typingIndicator = document.getElementById('typing-indicator');
+            const chatError = document.getElementById('chat-error');
+            const analysisPanel = document.getElementById('analysis-panel');
+            const analysisContent = document.getElementById('analysis-content');
+            const quickActionBtns = document.querySelectorAll('.quick-action-btn');
+
+            let currentUser = null;
+
+            // MOCKED for demonstration. Replace apiClient and gamification with your actual logic.
+            const apiClient = {
+                sendChatMessage: async (user, message) => {
+                    console.log(`Sending message for ${user}: ${message}`);
+                    await new Promise(res => setTimeout(res, 1500)); // Simulate network delay
+                    if (message.toLowerCase().includes("error")) {
+                         throw new Error("Could not connect to the AI service.");
+                    }
+                    return {
+                        reply: "Thank you for sharing. It's brave to talk about these feelings. Let's explore this together.",
+                        analysis: message.toLowerCase().includes("anxious") ? {
+                            sentiment: { label: 'Negative', confidence: '0.89' },
+                            emotion: { label: 'Anxiety', confidence: '0.92' },
+                            distress: { is_urgent: false }
+                        } : null
+                    };
+                },
+                getChatHistory: async (user, limit) => {
+                    console.log(`Getting history for ${user} with limit ${limit}`);
+                    return { conversations: [] }; // Start with no history for demo
+                }
+            };
+            window.gamification = {
+                 handleAIChat: async () => console.log("XP for AI chat added."),
+                 handleEmotionAnalysis: async () => console.log("XP for emotion analysis added.")
+            };
+
+            // Get current user info
+            try {
+                // const userData = JSON.parse(localStorage.getItem('current_user'));
+                const userData = { username: 'demo_user' }; // Mock user
+                currentUser = userData.username;
+                await loadChatHistory();
+            } catch (error) {
+                console.error('Error getting user info:', error);
+            // window.location.href = 'Login.html';
+                return;
+            }
+
+            // Chat form submission
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const message = messageInput.value.trim();
+                if (!message) return;
+
+                messageInput.value = '';
+                await sendMessage(message);
+            });
+
+            // Quick action buttons
+            quickActionBtns.forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const message = btn.textContent.trim();
+                    messageInput.value = '';
+                    await sendMessage(message);
+                });
+            });
+
+            // Send message function
+            async function sendMessage(message) {
+                // Add user message to chat
+                addMessage(message, 'user');
+                
+                // Show typing indicator
+                showTypingIndicator();
+                chatError.classList.add('hidden');
+                sendButton.disabled = true;
+
+                try {
+                    const response = await apiClient.sendChatMessage(currentUser, message);
+                    
+                    // Add gamification XP
+                    if (window.gamification) {
+                        await window.gamification.handleAIChat();
+                        if (response.analysis) {
+                            await window.gamification.handleEmotionAnalysis();
+                        }
+                    }
+                    
+                    // Hide typing indicator and add bot response
+                    hideTypingIndicator();
+                    addMessage(response.reply, 'bot');
+                    
+                    // Show analysis if available
+                    if (response.analysis) {
+                        showAnalysis(response.analysis);
+                    }
+
+                } catch (error) {
+                    hideTypingIndicator();
+                    chatError.textContent = error.message;
+                    chatError.classList.remove('hidden');
+                } finally {
+                    sendButton.disabled = false;
+                    messageInput.focus();
+                }
+            }
+
+            // Add message to chat
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message-bubble ${sender === 'user' ? 'user-message' : 'bot-message'} p-4 rounded-lg`;
+                
+                if (sender === 'user') {
+                    messageDiv.innerHTML = `<p>${text}</p>`;
+                } else {
+                    messageDiv.innerHTML = `
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800 mb-1">AI Wellness Companion</p>
+                                <p class="text-gray-600">${text}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Show/Hide typing indicator
+            function showTypingIndicator() {
+                typingIndicator.classList.add('show');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function hideTypingIndicator() {
+                typingIndicator.classList.remove('show');
+            }
+
+            // Show analysis
+            function showAnalysis(analysis) {
+                analysisContent.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                            <h4 class="font-medium text-blue-800 mb-2">Sentiment</h4>
+                            <p class="text-blue-600 capitalize font-semibold">${analysis.sentiment?.label || 'N/A'}</p>
+                            <p class="text-sm text-blue-500">Confidence: ${analysis.sentiment?.confidence || 'N/A'}</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                            <h4 class="font-medium text-green-800 mb-2">Emotion</h4>
+                            <p class="text-green-600 capitalize font-semibold">${analysis.emotion?.label || 'N/A'}</p>
+                            <p class="text-sm text-green-500">Confidence: ${analysis.emotion?.confidence || 'N/A'}</p>
+                        </div>
+                    </div>
+                    ${analysis.distress?.is_urgent ? `
+                        <div class="mt-4 bg-red-50 border border-red-200 p-4 rounded-lg">
+                            <h4 class="font-medium text-red-800 mb-2">⚠️ Urgent Support Needed</h4>
+                            <p class="text-red-600">${analysis.distress.recommendation}</p>
+                        </div>
+                    ` : ''}
+                `;
+                analysisPanel.classList.remove('hidden');
+            }
+
+            // Load chat history
+            async function loadChatHistory() {
+                try {
+                    const response = await apiClient.getChatHistory(currentUser, 10);
+                    if (response.conversations && response.conversations.length > 0) {
+                        chatMessages.innerHTML = ''; // Clear welcome message
+                        
+                        response.conversations.forEach(conv => {
+                            addMessage(conv.user_message, 'user');
+                            addMessage(conv.bot_reply, 'bot');
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error loading chat history:', error);
+                }
+            }
+
+            // Focus on input when page loads
+            messageInput.focus();
+        });
+    </script>
+</body>
+</html>
