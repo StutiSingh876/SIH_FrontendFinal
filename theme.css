@@ -1,0 +1,65 @@
+:root {
+  --background-color: #f9f9f9;
+  --text-color: #222;
+  --accent-color: #4d90fe;
+  --panel-bg: #ffffff;
+}
+
+.dark-theme {
+  --background-color: #181818;
+  --text-color: #f9f9f9;
+  --accent-color: #ff9800;
+  --panel-bg: #222222;
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+a {
+  color: var(--accent-color);
+  transition: color 0.3s ease;
+}
+
+/* Override backgrounds for panels, forms, etc. */
+.bg-white, .bg-blue-50 {
+  background-color: var(--panel-bg) !important;
+  transition: background-color 0.3s ease;
+}
+
+.text-gray-800, .text-blue-800 {
+  color: var(--text-color) !important;
+  transition: color 0.3s ease;
+}
+
+.text-gray-500, .text-gray-600 {
+  color: var(--text-color) !important;
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
+/* Buttons */
+.bg-blue-600 {
+  background-color: var(--accent-color) !important;
+  transition: background-color 0.3s ease;
+}
+
+.bg-blue-700:hover {
+  background-color: var(--accent-color) !important;
+  filter: brightness(85%);
+  transition: background-color 0.3s ease;
+}
+
+/* Inputs */
+input {
+  background-color: var(--panel-bg);
+  color: var(--text-color);
+  border-color: #ccc;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+input:focus {
+  outline-color: var(--accent-color);
+}

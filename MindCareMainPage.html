@@ -38,10 +38,117 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* Dark theme styles */
+        body.dark-theme {
+            background-color: #1e293b; /* slate-800 */
+            color: #e2e8f0; /* slate-200 */
+        }
+        body.dark-theme header {
+            background-color: #1e293b; /* slate-800 */
+        }
+        body.dark-theme .hero-gradient {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 1) 0%, rgba(51, 65, 85, 1) 100%);
+        }
+        body.dark-theme .bg-white {
+            background-color: #2d3748; /* slate-700 */
+        }
+        body.dark-theme .bg-slate-50 {
+            background-color: #374151; /* slate-600 */
+        }
+        body.dark-theme .text-slate-700,
+        body.dark-theme .text-slate-800 {
+            color: #e2e8f0; /* slate-200 */
+        }
+        body.dark-theme .text-slate-600 {
+            color: #94a3b8; /* slate-400 */
+        }
+        body.dark-theme .text-slate-500 {
+            color: #cbd5e1; /* slate-300 */
+        }
+        body.dark-theme .bg-blue-50 {
+            background-color: #1e40af; /* blue-800 */
+        }
+        body.dark-theme .bg-green-50 {
+            background-color: #065f46; /* green-800 */
+        }
+        body.dark-theme .bg-blue-100 {
+            background-color: #1e40af; /* blue-800 */
+        }
+        body.dark-theme .bg-green-100 {
+            background-color: #065f46; /* green-800 */
+        }
+        body.dark-theme .bg-red-100 {
+            background-color: #991b1b; /* red-800 */
+        }
+        body.dark-theme .bg-purple-100 {
+            background-color: #6b21a8; /* purple-800 */
+        }
+        body.dark-theme .bg-yellow-100 {
+            background-color: #854d0e; /* yellow-800 */
+        }
+        body.dark-theme .bg-indigo-100 {
+            background-color: #3730a3; /* indigo-800 */
+        }
+        body.dark-theme .bg-gradient-to-br.from-blue-50.to-indigo-100 {
+            background: linear-gradient(to bottom right, #1e40af, #3730a3);
+        }
+        body.dark-theme .bg-gradient-to-br.from-green-50.to-emerald-100 {
+            background: linear-gradient(to bottom right, #065f46, #064e3b);
+        }
+        body.dark-theme .bg-gradient-to-r.from-blue-500.to-purple-500 {
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+        }
+        body.dark-theme .border-slate-200 {
+            border-color: #4b5563; /* slate-600 */
+        }
+        body.dark-theme .bg-slate-800 {
+            background-color: #111827; /* slate-900 */
+        }
+        body.dark-theme .text-slate-300 {
+            color: #d1d5db; /* slate-300 */
+        }
+        body.dark-theme .border-slate-700 {
+            border-color: #4b5563; /* slate-600 */
+        }
+        body.dark-theme .text-blue-600 {
+            color: #60a5fa; /* blue-400 */
+        }
+        body.dark-theme .text-green-600 {
+            color: #34d399; /* green-400 */
+        }
+        body.dark-theme .text-purple-600 {
+            color: #c084fc; /* purple-400 */
+        }
+        body.dark-theme .text-yellow-600 {
+            color: #facc15; /* yellow-400 */
+        }
+        body.dark-theme .text-indigo-600 {
+            color: #818cf8; /* indigo-400 */
+        }
+        body.dark-theme .text-red-600 {
+            color: #f87171; /* red-400 */
+        }
+        body.dark-theme .bg-white\/80 {
+            background-color: rgba(55, 65, 81, 0.8); /* slate-700 with opacity */
+        }
+        body.dark-theme .bg-white\/90 {
+            background-color: rgba(55, 65, 81, 0.9); /* slate-700 with opacity */
+        }
+        body.dark-theme .bg-blue-600 {
+            background-color: #2563eb; /* blue-600 */
+        }
+        body.dark-theme .hover\:bg-blue-700:hover {
+            background-color: #1d4ed8; /* blue-700 */
+        }
+        body.dark-theme .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+        }
+        body.dark-theme .ring-black {
+            --tw-ring-color: rgba(255, 255, 255, 0.05);
+        }
     </style>
 </head>
 <body class="text-slate-700">
-
     <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 transition-shadow duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-blue-600">MindCare</a>
@@ -74,23 +181,26 @@
                         <a href="" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">SOS Emergency Trigger</a>
                         <a href="chatbot.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">AI-Powered Chatbot</a>
                         <a href="" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">College Specialized</a>
-                        
                         <a href="" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">Student Feedback</a>
                         <a href="" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">Teacher's input</a>
                     </div>
                 </div>
             </div>
-            <button id="mobile-menu-button" class="md:hidden">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="text-slate-600 hover:text-blue-600">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="mobile-menu-button" class="md:hidden">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
         </div>
         <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
             <a href="#features" class="block py-2 text-slate-600 hover:text-blue-600">Features</a>
             <a href="#how-it-works" class="block py-2 text-slate-600 hover:text-blue-600">How It Works</a>
             <a href="#motivation" class="block py-2 text-slate-600 hover:text-blue-600">Motivation</a>
-            
             <div class="relative mt-4">
-                 <button id="mobile-dropdown-button" class="w-full bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition-colors">
+                <button id="mobile-dropdown-button" class="w-full bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition-colors">
                     Get Started <i class="fas fa-chevron-down text-xs ml-1"></i>
                 </button>
                 <div id="mobile-dropdown-menu" class="hidden mt-2 w-full bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10">
@@ -103,7 +213,7 @@
                     </div>
                 </div>
             </div>
-             </div>
+        </div>
     </header>
 
     <main>
@@ -124,7 +234,6 @@
             <div class="container mx-auto px-6">
                 <div class="max-w-4xl mx-auto">
                     <h2 class="text-3xl font-bold text-center text-slate-800 mb-12">Your Wellness Journey</h2>
-                    
                     <div class="grid md:grid-cols-2 gap-8">
                         <!-- Weekly Progress -->
                         <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-xl">
@@ -196,7 +305,6 @@
                 
                 <h3 class="text-2xl font-bold text-slate-700 mb-8 text-center fade-in">Core Features</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
                     <a href="chatbot.html" class="feature-card-link">
                         <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 fade-in h-full">
                             <div class="bg-blue-100 text-blue-600 w-12 h-12 rounded-lg flex items-center justify-center">
@@ -286,7 +394,6 @@
                             <p class="text-slate-600 mt-2">A virtual pet that grows healthier as you engage, visualizing your personal progress in a fun way.</p>
                         </div>
                     </a>
-
                 </div>
             </div>
         </section>
@@ -304,12 +411,12 @@
                         <p class="mt-2 text-slate-600">Sign up securely and anonymously. Your privacy is our top priority.</p>
                     </div>
                     <div class="p-6 fade-in">
-                         <div class="bg-green-100 text-green-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">2</div>
+                        <div class="bg-green-100 text-green-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">2</div>
                         <h3 class="text-xl font-bold mt-6">Track & Reflect</h3>
                         <p class="mt-2 text-slate-600">Start logging your moods and engaging with journaling prompts and wellness tools.</p>
                     </div>
                     <div class="p-6 fade-in">
-                         <div class="bg-purple-100 text-purple-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">3</div>
+                        <div class="bg-purple-100 text-purple-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">3</div>
                         <h3 class="text-xl font-bold mt-6">Connect & Grow</h3>
                         <p class="mt-2 text-slate-600">Connect with the AI chatbot, join peer forums, and access personalized resources.</p>
                     </div>
@@ -353,12 +460,12 @@
                     </ul>
                 </div>
                 <div>
-                   <h4 class="font-semibold text-slate-200">Connect With Us</h4>
-                   <div class="flex space-x-4 mt-4">
+                    <h4 class="font-semibold text-slate-200">Connect With Us</h4>
+                    <div class="flex space-x-4 mt-4">
                         <a href="#" class="hover:text-white"><i class="fab fa-twitter"></i></a>
                         <a href="#" class="hover:text-white"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="hover:text-white"><i class="fab fa-linkedin"></i></a>
-                   </div>
+                    </div>
                 </div>
             </div>
             <div class="mt-12 border-t border-slate-700 pt-6 text-center text-sm">
@@ -366,7 +473,6 @@
             </div>
         </div>
     </footer>
-
 
     <script>
         // Mobile menu toggle
@@ -430,7 +536,7 @@
         const mobileMenuDropdown = document.getElementById('mobile-dropdown-menu');
 
         desktopBtn.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent the window click listener from firing immediately
+            event.stopPropagation();
             desktopMenu.classList.toggle('hidden');
         });
 
@@ -439,7 +545,6 @@
             mobileMenuDropdown.classList.toggle('hidden');
         });
 
-        // Close dropdowns if user clicks outside
         window.addEventListener('click', (event) => {
             if (!desktopMenu.classList.contains('hidden') && !desktopBtn.contains(event.target)) {
                 desktopMenu.classList.add('hidden');
@@ -449,6 +554,28 @@
             }
         });
         // END: Dropdown Menu Logic
+
+        // Dark Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const themeIcon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            if (body.classList.contains('dark-theme')) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
 
         // Gamification Initialization
         document.addEventListener('DOMContentLoaded', async () => {
@@ -522,7 +649,6 @@
 
         // Initialize gamification handlers
         addGamificationHandlers();
-
     </script>
 </body>
 </html>
